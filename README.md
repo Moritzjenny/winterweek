@@ -1,3 +1,21 @@
+## Venv setup
+
+I use venv for python and this will be ignored from github. Therefore go to your /winterweek/api folder and do this for Linux:
+
+$ python3 -m venv venv
+$ source venv/bin/activate
+(venv) $ _
+
+Or Windows instead: 
+
+$ python -m venv venv
+$ venv\Scripts\activate
+(venv) $ _
+
+and install the python-dotenv in the venv
+
+(venv) $ pip install flask python-dotenv
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
