@@ -1,3 +1,15 @@
+@font-face {
+    font-family: custom-font;
+    src: url(fonts/Maple3Cartoon.ttf);
+    color: black;
+}
+
+@font-face {
+    font-family: custom-font-regular;
+    src: url(fonts/Maple3Cartoon_regular.ttf);
+    color: black;
+}
+
 .App {
   text-align: center;
 }
@@ -13,6 +25,33 @@
   }
 }
 
+.custom-font-bold{
+    font-family: custom-font;
+}
+
+.custom-font {
+    font-family: custom-font-regular;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+}
+
+.item {
+    border: 3px solid white;
+    background-color: white;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: auto;
+}
+
+.item img {
+    width: 100%;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -26,8 +65,14 @@
 
 .header-image {
     background-repeat: no-repeat;
-    background-position: center;
     background-size: cover;
+    background-position: bottom;
+}
+
+.image {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }
 
 .App-link {
