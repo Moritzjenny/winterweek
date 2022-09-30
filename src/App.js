@@ -3,16 +3,23 @@ import forest from './images/forest.jpg';
 import spinatscha from './images/spinatscha.jpg';
 import sedrun from './images/sedrun.jpg';
 import icu from './images/icu.png';
+import {useRef} from 'react';
 import './App.css';
 
 function App() {
   const [message, setMessage] = useState("--");
+  const ref = useRef(null);
 
   useEffect(() => {
     fetch('/message').then(res => res.json()).then(data => {
         setMessage(data.message);
     });
   }, []);
+
+
+    const goToRegisterButtons = () => {
+        ref.current?.scrollIntoView({behavior: 'smooth'});
+    };
 
   return (
       <div className="App">
@@ -30,7 +37,7 @@ function App() {
 
           <div className="container" style={{minHeight: '30px'}}/>
 
-          <div className="button6"> Register
+          <div className="button6" onClick={() => { goToRegisterButtons(); }} style={{cursor: 'pointer'}}> Register
           </div>
 
           <div>
@@ -71,7 +78,7 @@ function App() {
 
           <div className="grid-wrapper">
               <div className="grid-container-options">
-                  <div className="rcorners" >
+                  <div className="rcorners" ref={ref} >
                       <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>ICU Members</div>
                       <div className="tile-keyword-row-large">
                           <div className="custom-font text" style={{fontSize: '55px'}}> <span className="custom-font-bold">500</span></div>
@@ -82,7 +89,7 @@ function App() {
                       </div>
                       <div className="" style={{fontSize: '18px'}}>________________________________</div>
                       <div>
-                          <div className="button6" style={{margin: '20px'}}> Register </div>
+                          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdQ2OYju5qvYjHIBVI4-yZu8MlDJc3OZnDDi15wgz___UudzQ/viewform?usp=sf_link"><div className="button6" style={{margin: '20px'}}> Register </div></a>
                       </div>
                   </div>
 
@@ -97,7 +104,7 @@ function App() {
                       </div>
                       <div className="" style={{fontSize: '18px'}}>________________________________</div>
                       <div>
-                          <div className="button6" style={{margin: '20px'}}> Register </div>
+                          <a href="https://docs.google.com/forms/d/e/1FAIpQLScil9xHA31qb3SOXWqTc6WHHBiV_B4uNDpGcPx4dRfV5Zwdyg/viewform?usp=sf_link"><div className="button6" style={{margin: '20px'}}> Register </div></a>
                       </div>
                   </div>
 
@@ -112,7 +119,7 @@ function App() {
                       </div>
                       <div className="" style={{fontSize: '18px'}}>________________________________</div>
                       <div>
-                          <div className="button6" style={{margin: '20px'}}> Register </div>
+                          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfi_Yy1yQ6JjIs_G5WZAo_388TFiIBxagbGSqs1fRzaCmVfpA/viewform?usp=sf_link"><div className="button6" style={{margin: '20px'}}> Register </div></a>
                       </div>
                   </div>
 
@@ -176,12 +183,11 @@ function App() {
 
           <div className="footer">
               <div style={{minHeight: '50px'}}/>
-              <a style={{textDecoration: 'none'}}href="https://icuzh.ch/"> <div style={{maxWidth: '500px', padding: '0 50px'}}>
+              <a style={{textDecoration: 'none'}}href="https://icuzh.ch/"> <div style={{maxWidth: '500px', padding: '0 20px'}}>
                       <div className='image' style={{ backgroundImage: `url(${icu})`, height: '60px', backgroundSize: '300px', backgroundPosition: 'left'}}/>
                       <p className="custom-font" style={{fontSize: '15px', color: '#192c37', textAlign: 'left'}}>© 2022 Fachverein Informatik, All right reserved.</p>
                   </div></a>
           </div>
-
       </div>
   );
 }
