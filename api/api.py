@@ -10,7 +10,14 @@ documentIDNonStudents = "1exnDn0rhZw6kQCeQOADmOzvRggZI2C3NN-TpLk-fH2k"
 APIKey = "AIzaSyDZNVwfM0pzyPKzJArhwnOKafk3Cr7jpHc"
 totalPlaces = 69
 
-@app.route('/message')
+
+app = Flask(__name__, static_folder='../build', static_url_path='/')
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
+@app.route('/api/message')
 def get_message():
 
     #get icu members list

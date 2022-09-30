@@ -98,6 +98,17 @@
     padding: 20px 0;
 }
 
+
+.item img {
+    width: 100%;
+}
+
+.image {
+    background-position: center;
+    background-repeat: no-repeat;
+    max-width: 450px;
+}
+
 @media screen and (max-width: 700px) {
     .grid-wrapper {
         max-width: 1200px;
@@ -130,6 +141,10 @@
         grid-template-columns: 100%;
     }
 
+    .image{
+        max-width: 100%;
+    }
+
 
 }
 
@@ -139,9 +154,6 @@
     display: flex;
 }
 
-.item img {
-    width: 100%;
-}
 
 .App-header {
   min-height: 100vh;
@@ -167,11 +179,6 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom;
-}
-
-.image {
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 .button6 {

@@ -11,7 +11,7 @@ function App() {
   const ref = useRef(null);
 
   useEffect(() => {
-    fetch('/message').then(res => res.json()).then(data => {
+    fetch('/api/message').then(res => res.json()).then(data => {
         setMessage(data.message);
     });
   }, []);
@@ -46,11 +46,11 @@ function App() {
 
           <div className="container" style={{minHeight: '80px'}}/>
           <div className="grid-wrapper">
-              <div className="grid-container">
+             <div className="grid-container">
                   <div className='item'>
                       <p className="custom-font text" style={{fontSize: '20px', textAlign: 'left'}}> <span className="custom-font-bold"> &#128716; Nova Casa Spinatscha</span> will be our home base to stay for the week. Nova Casa Spinatscha is situated on the edge of the village of Sedrun. In 2 minutes you are in the village center, the indoor pool and at the train station.</p>
                   </div>
-                  <div className='image item' style={{ backgroundImage: `url(${spinatscha})`, height: '340px'}}/>
+                 <a style={{textDecoration: 'none', margin: '0 40px'}} href="http://www.spinatscha.ch/neu/de/"> <div className='image item rcorners' style={{ backgroundImage: `url(${spinatscha})`, height: '340px'}}/></a>
               </div>
           </div>
 
@@ -58,7 +58,7 @@ function App() {
 
           <div className="grid-wrapper">
               <div className="grid-container">
-                  <div className='image item grid-row2' style={{ backgroundImage: `url(${sedrun})`, height: '300px'}}/>
+                  <a style={{textDecoration: 'none', margin: '0 40px'}} href="https://www.andermatt.ch/attraktionen/skiarena-andermatt-sedrun-8a9a1e476e"> <div className='image item grid-row2 rcorners' style={{ backgroundImage: `url(${sedrun})`, height: '300px'}}/></a>
                   <div className='item'>
                       <p className="custom-font text" style={{fontSize: '20px', textAlign: 'left'}}> <span className="custom-font-bold"> &#127935; Ski Arena Andermatt Sedrun Disentis</span> is our playground for the week. With 180 km of slopes and 33 lifts up to 3,000 m above sea level, Andermatt+Sedrun+Disentis is the largest ski area in Central Switzerland.</p>
                   </div>
@@ -180,6 +180,8 @@ function App() {
                   </div>
               </div>
           </div>
+
+          <div style={{minHeight: '50px'}}/>
 
           <div className="footer">
               <div style={{minHeight: '50px'}}/>
