@@ -58,7 +58,7 @@ function App() {
 
           <div className="grid-wrapper">
               <div className="grid-container">
-                  <a style={{textDecoration: 'none', margin: '0 40px'}} href="https://www.andermatt.ch/attraktionen/skiarena-andermatt-sedrun-8a9a1e476e"> <div className='image item grid-row2 rcorners' style={{ backgroundImage: `url(${sedrun})`, height: '300px'}}/></a>
+                  <a className="grid-row2" style={{textDecoration: 'none', margin: '0 40px'}} href="https://www.andermatt.ch/attraktionen/skiarena-andermatt-sedrun-8a9a1e476e"> <div className='image item rcorners' style={{ backgroundImage: `url(${sedrun})`, height: '300px'}}/></a>
                   <div className='item'>
                       <p className="custom-font text" style={{fontSize: '20px', textAlign: 'left'}}> <span className="custom-font-bold"> &#127935; Ski Arena Andermatt Sedrun Disentis</span> is our playground for the week. With 180 km of slopes and 33 lifts up to 3,000 m above sea level, Andermatt+Sedrun+Disentis is the largest ski area in Central Switzerland.</p>
                   </div>
