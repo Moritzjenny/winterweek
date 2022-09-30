@@ -109,6 +109,10 @@
     max-width: 450px;
 }
 
+.image-wrapper {
+    margin: 0 40px
+}
+
 @media screen and (max-width: 700px) {
     .grid-wrapper {
         max-width: 1200px;
@@ -143,6 +147,10 @@
 
     .image{
         max-width: 100%;
+    }
+
+    .image-wrapper{
+        margin: 0;
     }
 
 

@@ -50,7 +50,7 @@ function App() {
                   <div className='item'>
                       <p className="custom-font text" style={{fontSize: '20px', textAlign: 'left'}}> <span className="custom-font-bold"> &#128716; Nova Casa Spinatscha</span> will be our home base to stay for the week. Nova Casa Spinatscha is situated on the edge of the village of Sedrun. In 2 minutes you are in the village center, the indoor pool and at the train station.</p>
                   </div>
-                 <a style={{textDecoration: 'none', margin: '0 40px'}} href="http://www.spinatscha.ch/neu/de/"> <div className='image item rcorners' style={{ backgroundImage: `url(${spinatscha})`, height: '340px'}}/></a>
+                 <a className="image-wrapper" style={{textDecoration: 'none'}} href="http://www.spinatscha.ch/neu/de/"> <div className='image item rcorners' style={{ backgroundImage: `url(${spinatscha})`, height: '340px'}}/></a>
               </div>
           </div>
 
@@ -58,7 +58,7 @@ function App() {
 
           <div className="grid-wrapper">
               <div className="grid-container">
-                  <a className="grid-row2" style={{textDecoration: 'none', margin: '0 40px'}} href="https://www.andermatt.ch/attraktionen/skiarena-andermatt-sedrun-8a9a1e476e"> <div className='image item rcorners' style={{ backgroundImage: `url(${sedrun})`, height: '300px'}}/></a>
+                  <a className="grid-row2 image-wrapper" style={{textDecoration: 'none'}} href="https://www.andermatt.ch/attraktionen/skiarena-andermatt-sedrun-8a9a1e476e"> <div className='image item rcorners' style={{ backgroundImage: `url(${sedrun})`, height: '300px'}}/></a>
                   <div className='item'>
                       <p className="custom-font text" style={{fontSize: '20px', textAlign: 'left'}}> <span className="custom-font-bold"> &#127935; Ski Arena Andermatt Sedrun Disentis</span> is our playground for the week. With 180 km of slopes and 33 lifts up to 3,000 m above sea level, Andermatt+Sedrun+Disentis is the largest ski area in Central Switzerland.</p>
                   </div>
