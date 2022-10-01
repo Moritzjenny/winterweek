@@ -15,9 +15,9 @@ $ venv\Scripts\activate
 (venv) $ _
 ```
 
-and install the python-dotenv in the venv
+and install the python dependencies in the venv (make sure you activated the venv as mentioned above and that you are in the /winterweek/api folder)
 
-```(venv) $ pip install flask python-dotenv```
+```pip install -r requirements.txt```
 
 # Getting Started with Create React App
 
