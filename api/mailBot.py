@@ -47,7 +47,7 @@ def get_user_data(data, sheetIndex, rowIndex):
         # get icu members list
         response = requests.get(
             "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDMembers +
-            "/values/A"+str(rowIndex+2)+":R"+str(rowIndex+2)+"?key=" + APIKey)
+            "/values/A"+str(rowIndex+2)+":S"+str(rowIndex+2)+"?key=" + APIKey)
         dataList = (response.json()["values"])[0]
         cost = "500"
 
@@ -57,7 +57,7 @@ def get_user_data(data, sheetIndex, rowIndex):
         # get students list
         response = requests.get(
             "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDStudents +
-            "/values/A"+str(rowIndex+2)+":R"+str(rowIndex+2)+"?key=" + APIKey)
+            "/values/A"+str(rowIndex+2)+":S"+str(rowIndex+2)+"?key=" + APIKey)
         dataList = (response.json()["values"])[0]
         cost = "650"
 
@@ -67,7 +67,7 @@ def get_user_data(data, sheetIndex, rowIndex):
         # get non students list
         response = requests.get(
             "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDNonStudents +
-            "/values/A"+str(rowIndex+2)+":R"+str(rowIndex+2)+"?key=" + APIKey)
+            "/values/A"+str(rowIndex+2)+":S"+str(rowIndex+2)+"?key=" + APIKey)
         dataList = (response.json()["values"])[0]
         cost = "750"
 
