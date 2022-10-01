@@ -1,0 +1,30 @@
+{
+  "registration": {
+    "totalNumberOfFreePlaces": 70
+  },
+
+  "pricing": {
+    "icuMember": 500,
+    "student": 650,
+    "nonStudent": 750
+  },
+
+  "googleApi": {
+    "icuMemberDocumentID": "1Iq5uOSfdK6H2x6PCnvfLi9rNkBfzmbQotGFPN9KG7JE",
+    "studentDocumentID": "1qnbm8QdaaZ52hRLmHPOVet_NRBxKRDG7AhNAb1BtSA0",
+    "nonStudentDocumentID": "1exnDn0rhZw6kQCeQOADmOzvRggZI2C3NN-TpLk-fH2k",
+    "apiKey": "AIzaSyDZNVwfM0pzyPKzJArhwnOKafk3Cr7jpHc"
+  },
+
+  "mail": {
+    "senderName": "Winter Week 2023",
+    "subject": "Registration Info and Bill",
+    "senderMail": "winterweek23@outlook.com",
+    "senderPassword": "WinterWeek_23",
+    "smtpServer": "smtp-mail.outlook.com",
+    "port": 587,
+    "listOfIcuMemberMails": "lists/registeredIcuMembers.json",
+    "listOfStudentMails": "lists/registeredStudentMembers.json",
+    "listOfNonStudentMails": "lists/registeredNonStudentMails.json"
+  }  
+}
