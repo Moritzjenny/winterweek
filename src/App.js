@@ -8,11 +8,17 @@ import './App.css';
 
 function App() {
   const [message, setMessage] = useState("--");
+  const [icuPrice, setIcuPrice] = useState("--");
+  const [studentPrice, setStudentPrice] = useState("--");
+  const [nonStudentPrice, setNonStudentPrice] = useState("--");
   const ref = useRef(null);
 
   useEffect(() => {
     fetch('/api/message').then(res => res.json()).then(data => {
         setMessage(data.message);
+        setIcuPrice(data.icuMember);
+        setStudentPrice(data.student);
+        setNonStudentPrice(data.nonStudent);
     });
   }, []);
 
@@ -70,7 +76,7 @@ function App() {
 
           <div style={{maxWidth: '1200px', margin: 'auto'}}>
               <div style={{padding: '0 30px'}}>
-                  <p className="custom-font" style={{fontSize: '20px', textAlign: 'left'}}> <span className="custom-font-bold"> &#128176; Our deal contains</span> a great week of skiing with your fellow students for CHF 500, accommodations, meals, travel and ski pass included! </p>
+                  <p className="custom-font" style={{fontSize: '20px', textAlign: 'left'}}> <span className="custom-font-bold"> &#128176; Our deal contains</span> a great week of skiing with your fellow students for CHF {icuPrice}, accommodations, meals, travel and ski pass included! </p>
               </div>
           </div>
 
@@ -81,11 +87,11 @@ function App() {
                   <div className="rcorners" ref={ref} >
                       <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>ICU Members</div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font text" style={{fontSize: '55px'}}> <span className="custom-font-bold">500</span></div>
+                          <div className="custom-font text" style={{fontSize: '55px'}}> <span className="custom-font-bold">{icuPrice}</span></div>
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
                       </div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '150px'}}> First things first, you're awesome! We want to give back to our members, that's why you exclusively profit of our best price. You get to experience the magical Winter Week for just 500.-.</div>
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '150px'}}> First things first, you're awesome! We want to give back to our members, that's why you exclusively profit of our best price. You get to experience the magical Winter Week for just {icuPrice}.-.</div>
                       </div>
                       <div className="" style={{fontSize: '18px'}}>________________________________</div>
                       <div>
@@ -96,11 +102,11 @@ function App() {
                   <div className="rcorners" >
                       <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>Students</div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font text" style={{fontSize: '55px'}}> <span className="custom-font-bold">650</span></div>
+                          <div className="custom-font text" style={{fontSize: '55px'}}> <span className="custom-font-bold">{studentPrice}</span></div>
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
                       </div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '150px'}}>Hey fellow students, we know you're on a budget. That's why we made the best deals with our partners. For 650.- you can experience the ski holidays of a lifetime.</div>
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '150px'}}>Hey fellow students, we know you're on a budget. That's why we made the best deals with our partners. For {studentPrice}.- you can experience the ski holidays of a lifetime.</div>
                       </div>
                       <div className="" style={{fontSize: '18px'}}>________________________________</div>
                       <div>
@@ -111,11 +117,11 @@ function App() {
                   <div className="rcorners" >
                       <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>Non-Students</div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font text" style={{fontSize: '55px'}}> <span className="custom-font-bold">750</span></div>
+                          <div className="custom-font text" style={{fontSize: '55px'}}> <span className="custom-font-bold">{nonStudentPrice}</span></div>
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
                       </div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '150px'}}>Already working hard in the corporate world, but missing your friends at ICU? Exprience the sudent life again for one exciting week for 750.-</div>
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '150px'}}>Already working hard in the corporate world, but missing your friends at ICU? Exprience the sudent life again for one exciting week for {nonStudentPrice}.-</div>
                       </div>
                       <div className="" style={{fontSize: '18px'}}>________________________________</div>
                       <div>

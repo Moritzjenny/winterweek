@@ -49,7 +49,7 @@ def get_user_data(data, sheetIndex, rowIndex):
             "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDMembers +
             "/values/A"+str(rowIndex+2)+":S"+str(rowIndex+2)+"?key=" + APIKey)
         dataList = (response.json()["values"])[0]
-        cost = "500"
+        cost = data["pricing"]["icuMember"]
 
     elif sheetIndex == 1:
         documentIDStudents = data["googleApi"]["studentDocumentID"]
@@ -59,7 +59,7 @@ def get_user_data(data, sheetIndex, rowIndex):
             "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDStudents +
             "/values/A"+str(rowIndex+2)+":S"+str(rowIndex+2)+"?key=" + APIKey)
         dataList = (response.json()["values"])[0]
-        cost = "650"
+        cost = data["pricing"]["student"]
 
     elif sheetIndex == 2:
         documentIDNonStudents = data["googleApi"]["nonStudentDocumentID"]
@@ -69,7 +69,7 @@ def get_user_data(data, sheetIndex, rowIndex):
             "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDNonStudents +
             "/values/A"+str(rowIndex+2)+":S"+str(rowIndex+2)+"?key=" + APIKey)
         dataList = (response.json()["values"])[0]
-        cost = "750"
+        cost = data["pricing"]["nonStudent"]
 
     userData["timestamp"] = dataList[0]
     userData["email"] = dataList[1]
