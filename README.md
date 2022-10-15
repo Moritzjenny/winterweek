@@ -19,6 +19,10 @@ and install the python dependencies in the venv (make sure you activated the ven
 
 ```pip install -r requirements.txt```
 
+## Setup credentials for mailbot
+
+place a pw.txt file in /winterweek/api with the sender email pw.
+
 # Getting the app to run in dev mode
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
