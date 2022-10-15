@@ -7,8 +7,9 @@ from email.utils import formataddr
 
 
 
+
 def get_config():
-    with open('config.json', 'r') as f:
+    with open('config.json', 'r', encoding='unicode_escape') as f:
         data = json.load(f)
         return data
 
@@ -143,55 +144,92 @@ def send_mail(userData, data):
     cost = userData["cost"]
 
 
-    # Create the plain-text and HTML version of your message
-    text = "Hi " + str(fullName) + """
+    html = """\
+    <html>
+    <head>
+        <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        th, td {
+          padding: 5px;
+          text-align: left;
+        }
+        </style>
+      <body>
+        <p>Hi """ + str(fullName) + """<br>
+           Thanks for registering for the winter week 2023! <br>
+        </p>
+        <table>
+  <caption style="text-align: left"><b>Your registration</b></caption>
+  <tr>
+    <th>Phone number</th>
+    <th>Name</th>
+    <th>Traveling with the Group</th>
+    <th>Vegetarian Dinner</th>
+    <th>Ski Pass</th>
+    <th>Ski Lessons</th>
+    <th>Freeriding</th>
+    <th>Price</th>    
+  </tr>
+  <tr>
+    <td>""" + str(phoneNumber) + """</td>
+    <td>""" + str(fullName) + """</td>
+    <td>""" + str(group) + """</td>
+    <td>""" + str(food) + """</td>
+    <td>""" + str(skiPass) + """</td>
+    <td>""" + str(lessons) + """</td>
+    <td>""" + str(tour) + """</td>
+    <td>""" + str(cost) + """ CHF</td>
+  </tr>
+</table>
+<br><br>
+<p>
+Please transfer the registration fee (""" +  str(cost) + """ CHF) within the next 2 weeks. The payment details are listed below<br>
+If you are an ICU Member, note that the registration is only finalized after the payment of the ICU-Membership fee.<br>
+If any of your information is wrong or if you have any additional questions, feel free to contact us. <br>
+<b>E-mail: </b>""" + data["mail"]["contactMail"] + """<br>
+<b>WhatsApp: </b>""" + data["mail"]["contactNumber"] + """<br>
+</p>
 
-Thanks for registering for the winter week 2023!
+<p>
+Traveling with the group:<br>
+Departure: """ + data["mail"]["departure"] + """ <br>
+Arrival: """ + data["mail"]["arrival"] + """  <br><br>
+If you can’t make the dates, contact us as early as possible.<br><br>
 
-Your Registration:
-Phone number: """ + str(phoneNumber) + """
-Name: """ + str(fullName) + """
-Traveling with the Group: """ + str(group) + """
-Vegetarian Dinner: """ + str(food) + """
-Ski Pass: """ + str(skiPass) + """
-Ski Lessons: """ + str(lessons) + """
-Freeriding: """ + str(tour) + """
-Price: """ + str(cost) + """CHF
+Freeriding:<br>
+If you are interested in doing a guided ski/ freeride tour. You can get some more information and register yourself here: TODO<br>
+</p>
 
-Please transfer the registration fee within the next 2 weeks. The payment details are listed below
-If you are an ICU Member, note that the registration is only finalized after the payment of the ICU-Membership fee.
-If any of your information is wrong or if you have any additional questions, feel free to contact us.
-E-mail: """ + data["mail"]["contactMail"] + """
-WhatsApp: https://wa.me/41789807673
+<p>
+Stay tuned for further Information<br>
+Greetings<br>
+Your Winter Week team =)<br>
+</p>
 
-Stay tuned for further Information
-Greetings
-Your Winter Week team =)
+<p>
+------- Payment Details -------<br>
+Kontonamen: Fachverein Informatik ICU (FV INF ICU)<br>
+Zahlungszweck: Winter Week 2023, """ + email + """<br>
+Kontonummer: 80-25124-4<br>
+BC-Nummer: 9000<br>
+BIC: POFICHBEXXX<br>
+Prüfziffer: 36<br>
+IBAN: CH36 0900 0000 8002 5124 4<br>
+---------------------------------------<br>
+</p>
 
-Traveling with the group:
-Departure: 27.1.2023, 08:00, Zürich HB
-Arrival: 4.2.2023, 18:00, Zürich HB
-If you can’t make the dates, contact us as early as possible.
-
-Freeriding:
-If you are interested in doing a guided ski/ freeride tour. You can get some more information and register yourself here: TODO
-
-------- Payment Details -------
-Kontonamen: Fachverein Informatik ICU (FV INF ICU)
-Zahlungszweck: Winter Week 2023, """ + email + """
-Kontonummer: 80-25124-4
-BC-Nummer: 9000
-BIC: POFICHBEXXX
-Prüfziffer: 36
-IBAN: CH36 0900 0000 8002 5124 4
----------------------------------------
-    
+      </body>
+    </html>
     """
+    part1 = MIMEText(html, "html")
 
-    # Turn these into plain/html MIMEText objects
-    part1 = MIMEText(text, "plain")
-
+    # Add HTML/plain-text parts to MIMEMultipart message
+    # The email client will try to render the last part first
     message.attach(part1)
+
 
     # Create a secure SSL context
     context = ssl.create_default_context()
@@ -210,12 +248,9 @@ IBAN: CH36 0900 0000 8002 5124 4
     finally:
         server.quit()
 
-
 data = get_config()
 [icu, students, nonStudents] = get_lists_of_registered_users(data)
 userDataObjects = compare_registered_and_mailed_users(data, [icu, students, nonStudents])
 for userDataObject in userDataObjects:
     send_mail(userDataObject, data)
-
-
 
