@@ -12,6 +12,11 @@ def get_config():
         data = json.load(f)
         return data
 
+def get_pw(file):
+    with open(file, 'r') as f:
+        pw = f.read()
+        return pw
+
 
 def get_lists_of_registered_users(data):
     documentIDMembers = data["googleApi"]["icuMemberDocumentID"]
@@ -116,7 +121,7 @@ def send_mail(userData, data):
     port = data["mail"]["port"]
     sender_email = formataddr((data["mail"]["senderName"], data["mail"]["senderMail"]))
     receiver_email = userData["email"]
-    password = data["mail"]["senderPassword"]
+    password = get_pw(data["mail"]["senderPassword"])
 
     message = MIMEMultipart("alternative")
     message["Subject"] = data["mail"]["subject"]
@@ -139,47 +144,47 @@ def send_mail(userData, data):
 
 
     # Create the plain-text and HTML version of your message
-    text = """
-    Hi """ +fullName+ """
-    Thanks for registering for the winter week 2023!
-    
-    Your Registration:
-    Phone number: """ + phoneNumber + """
-    Name: """ + fullName + """
-    Traveling with the Group: """ + group + """
-    Vegetarian Dinner: """ + food + """
-    Ski Pass: """ + skiPass + """
-    Ski Lessons: """ + lessons + """
-    Freeriding: """ + tour + """
-    Price: """ + cost + """CHF
-    
-    Please transfer the registration fee within the next 2 weeks. The payment details are listed below
-    If you are an ICU Member, note that the registration is only finalized after the payment of the ICU-Membership fee.
-    If any of your information is wrong or if you have any additional questions, feel free to contact us. 
-    E-mail: """ + data["mail"]["senderMail"] + """
-    WhatsApp: https://wa.me/41789807673
-    
-    Stay tuned for further Information
-    Greetings
-    Your Winter Week team =)
-    
-    Traveling with the group:
-    Departure: 27.1.2023, 08:00, Zürich HB
-    Arrival: 4.2.2023, 18:00, Zürich HB
-    If you can’t make the dates, contact us as early as possible.
-    
-    Freeriding:
-    If you are interested in doing a guided ski/ freeride tour. You can get some more information and register yourself here: TODO
-    
-    ------- Payment Details -------
-    Kontonamen: Fachverein Informatik ICU (FV INF ICU)
-    Zahlungszweck: Winter Week 2023, """ + email + """
-    Kontonummer: 80-25124-4
-    BC-Nummer: 9000
-    BIC: POFICHBEXXX
-    Prüfziffer: 36
-    IBAN: CH36 0900 0000 8002 5124 4
-    ---------------------------------------
+    text = "Hi " + str(fullName) + """
+
+Thanks for registering for the winter week 2023!
+
+Your Registration:
+Phone number: """ + str(phoneNumber) + """
+Name: """ + str(fullName) + """
+Traveling with the Group: """ + str(group) + """
+Vegetarian Dinner: """ + str(food) + """
+Ski Pass: """ + str(skiPass) + """
+Ski Lessons: """ + str(lessons) + """
+Freeriding: """ + str(tour) + """
+Price: """ + str(cost) + """CHF
+
+Please transfer the registration fee within the next 2 weeks. The payment details are listed below
+If you are an ICU Member, note that the registration is only finalized after the payment of the ICU-Membership fee.
+If any of your information is wrong or if you have any additional questions, feel free to contact us.
+E-mail: """ + data["mail"]["contactMail"] + """
+WhatsApp: https://wa.me/41789807673
+
+Stay tuned for further Information
+Greetings
+Your Winter Week team =)
+
+Traveling with the group:
+Departure: 27.1.2023, 08:00, Zürich HB
+Arrival: 4.2.2023, 18:00, Zürich HB
+If you can’t make the dates, contact us as early as possible.
+
+Freeriding:
+If you are interested in doing a guided ski/ freeride tour. You can get some more information and register yourself here: TODO
+
+------- Payment Details -------
+Kontonamen: Fachverein Informatik ICU (FV INF ICU)
+Zahlungszweck: Winter Week 2023, """ + email + """
+Kontonummer: 80-25124-4
+BC-Nummer: 9000
+BIC: POFICHBEXXX
+Prüfziffer: 36
+IBAN: CH36 0900 0000 8002 5124 4
+---------------------------------------
     
     """
 

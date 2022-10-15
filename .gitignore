@@ -130,3 +130,6 @@ yarn-error.log*
 
 venv
 __pycache__
+
+# credentials
+/api/pw.txt
