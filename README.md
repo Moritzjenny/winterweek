@@ -17,7 +17,7 @@ $ venv\Scripts\activate
 
 and install the python dependencies in the venv (make sure you activated the venv as mentioned above and that you are in the /winterweek/api folder)
 
-```pip install -r requirements.txt```
+```pip3 install -r requirements.txt```
 
 ## Setup credentials for mailbot
 
