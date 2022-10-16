@@ -91,7 +91,7 @@ function App() {
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
                       </div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '150px'}}> First things first, you're awesome! We want to give back to our members, that's why you exclusively profit of our best price. You get to experience the magical Winter Week for just {icuPrice}.-.</div>
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '150px'}}> First things first, you're awesome! We want to give back to our members, that's why you exclusively profit of our best price. If you are still studying and you are an ICU-member you get to experience the magical Winter Week for just {icuPrice}.-. </div>
                       </div>
                       <div className="" style={{fontSize: '18px'}}>________________________________</div>
                       <div>
