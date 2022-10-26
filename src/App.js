@@ -136,7 +136,7 @@ function App() {
                   </div>
 
                   <div className="rcorners" >
-                      <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>Students</div>
+                      <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>VSUZH Members</div>
                       <div className="tile-keyword-row-large">
                           <div className="custom-font text" style={{fontSize: '55px'}}> <span className="custom-font-bold">{studentPrice}</span></div>
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
@@ -151,7 +151,7 @@ function App() {
                   </div>
 
                   <div className="rcorners" >
-                      <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>Non-Students</div>
+                      <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>Non-Members</div>
                       <div className="tile-keyword-row-large">
                           <div className="custom-font text" style={{fontSize: '55px'}}> <span className="custom-font-bold">{nonStudentPrice}</span></div>
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
