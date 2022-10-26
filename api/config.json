@@ -6,7 +6,8 @@
   "pricing": {
     "icuMember": 500,
     "student": 650,
-    "nonStudent": 750
+    "nonStudent": 750,
+    "skiPrice": 190
   },
 
   "googleApi": {
@@ -23,8 +24,8 @@
     "senderMail": "winterweek23@outlook.com",
     "contactMail": "board@icuzh.ch",
     "contactNumber": "https://wa.me/41764173298",
-    "departure": "29.1.2023, 08:00, Zürich HB",
-    "arrival": "4.2.2023, 18:00, Zürich HB",
+    "departure": "29.1.2023, 08:00, Zï¿½rich HB",
+    "arrival": "4.2.2023, 18:00, Zï¿½rich HB",
     "senderPassword": "pw.txt",
     "smtpServer": "smtp-mail.outlook.com",
     "port": 587,

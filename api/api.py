@@ -43,7 +43,8 @@ def get_message():
     icu = data["pricing"]["icuMember"]
     student = data["pricing"]["student"]
     nonStudent = data["pricing"]["nonStudent"]
+    skiPrice = data["pricing"]["skiPrice"]
 
-    return {'message': placesLeft, 'icuMember': icu, 'student': student, 'nonStudent': nonStudent}
+    return {'message': placesLeft, 'icuMember': icu, 'student': student, 'nonStudent': nonStudent, 'skiPrice': skiPrice}
 
 

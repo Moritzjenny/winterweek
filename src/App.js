@@ -11,6 +11,7 @@ function App() {
   const [icuPrice, setIcuPrice] = useState("--");
   const [studentPrice, setStudentPrice] = useState("--");
   const [nonStudentPrice, setNonStudentPrice] = useState("--");
+  const [skiPrice, setSkiPrice] = useState("--");
   const [buttonName, setButtonName] = useState("Loading...");
   const ref = useRef(null);
 
@@ -20,6 +21,7 @@ function App() {
         setIcuPrice(data.icuMember);
         setStudentPrice(data.student);
         setNonStudentPrice(data.nonStudent);
+        setSkiPrice(data.skiPrice);
         if(parseInt(data.message) > 0){
             setButtonName("Register")
         }
@@ -166,7 +168,7 @@ function App() {
               </div>
               <div style={{minHeight: '20px'}}/>
               <div className='custom-font text' style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left'}}>If the event can't take place because of new regulations regarding COVID-19, the full cost will be refunded.
-                  In case you don't need a ski pass, a discount of 200.- will be offered.</div>
+                  In case you don't need a ski pass, a discount of {skiPrice}.- will be offered.</div>
           </div>
 
           <div className="container" style={{minHeight: '50px'}}/>

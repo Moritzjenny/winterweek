@@ -61,8 +61,7 @@ def get_lists_of_registered_users(data):
 
     totalPlaces = data["registration"]["totalNumberOfFreePlaces"]
     placesLeft = totalPlaces - lenIcu - lenStudents - lenNonStudents
-    print(placesLeft)
-
+    
     return [icu, students, nonStudents, waitingList], placesLeft
 
 def get_user_data(data, sheetIndex, rowIndex):
@@ -125,7 +124,10 @@ def get_user_data(data, sheetIndex, rowIndex):
         userData["else"] = dataList[11]
     else:
         userData["else"] = dataList[12]
-    userData["cost"] = cost
+    skiReduction = 0
+    if (dataList[6] == "No"):
+        skiReduction = data["pricing"]["skiPrice"]
+    userData["cost"] = str(int(cost) - int(skiReduction))
     return userData
 
 def check_if_waitingList_empty(filename):
