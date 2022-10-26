@@ -61,7 +61,7 @@ def get_lists_of_registered_users(data):
 
     totalPlaces = data["registration"]["totalNumberOfFreePlaces"]
     placesLeft = totalPlaces - lenIcu - lenStudents - lenNonStudents
-    
+
     return [icu, students, nonStudents, waitingList], placesLeft
 
 def get_user_data(data, sheetIndex, rowIndex):
@@ -246,7 +246,6 @@ def send_mail(userData, data, waitingListActive=False):
     <br><br>
     <p>
     Please transfer the registration fee (""" +  str(cost) + """ CHF) within the next 2 weeks. The payment details are listed below<br>
-    If you are an ICU Member, note that the registration is only finalized after the payment of the ICU-Membership fee.<br>
     If any of your information is wrong or if you have any additional questions, feel free to contact us. <br>
     <b>E-mail: </b>""" + data["mail"]["contactMail"] + """<br>
     <b>WhatsApp: </b>""" + data["mail"]["contactNumber"] + """<br>
