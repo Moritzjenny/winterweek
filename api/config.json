@@ -1,6 +1,6 @@
 {
   "registration": {
-    "totalNumberOfFreePlaces": 70
+    "totalNumberOfFreePlaces": 5
   },
 
   "pricing": {
@@ -13,6 +13,7 @@
     "icuMemberDocumentID": "1Iq5uOSfdK6H2x6PCnvfLi9rNkBfzmbQotGFPN9KG7JE",
     "studentDocumentID": "1qnbm8QdaaZ52hRLmHPOVet_NRBxKRDG7AhNAb1BtSA0",
     "nonStudentDocumentID": "1exnDn0rhZw6kQCeQOADmOzvRggZI2C3NN-TpLk-fH2k",
+    "waitingListID": "1JD4LSAu9zXeecmvWs0c_HWlcXmptwnkFOxiAcYFvv0I",
     "apiKey": "AIzaSyDZNVwfM0pzyPKzJArhwnOKafk3Cr7jpHc"
   },
 
@@ -20,15 +21,16 @@
     "senderName": "Winter Week 2023",
     "subject": "Registration Info and Bill",
     "senderMail": "winterweek23@outlook.com",
-    "contactMail": "winterweek23@outlook.com",
-    "contactNumber": "https://wa.me/41789807673",
-    "departure": "27.1.2023, 08:00, Zürich HB",
+    "contactMail": "board@icuzh.ch",
+    "contactNumber": "https://wa.me/41764173298",
+    "departure": "29.1.2023, 08:00, Zürich HB",
     "arrival": "4.2.2023, 18:00, Zürich HB",
     "senderPassword": "pw.txt",
     "smtpServer": "smtp-mail.outlook.com",
     "port": 587,
     "listOfIcuMemberMails": "lists/registeredIcuMembers.json",
     "listOfStudentMails": "lists/registeredStudentMembers.json",
-    "listOfNonStudentMails": "lists/registeredNonStudentMails.json"
+    "listOfNonStudentMails": "lists/registeredNonStudentMails.json",
+    "listOfWaitingListMails": "lists/waitingListMails.json"
   }
 }

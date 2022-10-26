@@ -5,9 +5,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.utils import formataddr
 
-
-
-
 def get_config():
     with open('config.json', 'r', encoding='unicode_escape') as f:
         data = json.load(f)
@@ -23,6 +20,22 @@ def get_lists_of_registered_users(data):
     documentIDMembers = data["googleApi"]["icuMemberDocumentID"]
     documentIDStudents = data["googleApi"]["studentDocumentID"]
     documentIDNonStudents = data["googleApi"]["nonStudentDocumentID"]
+    documentIDWaitingList = data["googleApi"]["waitingListID"]
+
+    icuMemberFile = data["mail"]["listOfIcuMemberMails"]
+    studentFile = data["mail"]["listOfStudentMails"]
+    nonStudentFile = data["mail"]["listOfNonStudentMails"]
+
+    for i, filename in enumerate([icuMemberFile, studentFile, nonStudentFile]):
+        with open(filename, "r") as f:
+            fileData = json.load(f)
+            length = len(fileData["addresses"])
+            if (i == 0):
+                lenIcu = length
+            if (i == 1):
+                lenStudents = length
+            if (i == 2):
+                lenNonStudents = length
 
     APIKey = data["googleApi"]["apiKey"]
 
@@ -41,7 +54,16 @@ def get_lists_of_registered_users(data):
         "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDNonStudents + "/values/B1:B?key=" + APIKey)
     nonStudents = (response.json()["values"])[1:]
 
-    return [icu, students, nonStudents]
+    # get waiting list
+    response = requests.get(
+        "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDWaitingList + "/values/B1:B?key=" + APIKey)
+    waitingList = (response.json()["values"])[1:]
+
+    totalPlaces = data["registration"]["totalNumberOfFreePlaces"]
+    placesLeft = totalPlaces - lenIcu - lenStudents - lenNonStudents
+    print(placesLeft)
+
+    return [icu, students, nonStudents, waitingList], placesLeft
 
 def get_user_data(data, sheetIndex, rowIndex):
     APIKey = data["googleApi"]["apiKey"]
@@ -77,6 +99,17 @@ def get_user_data(data, sheetIndex, rowIndex):
         dataList = (response.json()["values"])[0]
         cost = data["pricing"]["nonStudent"]
 
+    elif sheetIndex == 3:
+        documentIDWaitingList = data["googleApi"]["waitingListID"]
+
+        # get waiting list
+        response = requests.get(
+            "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDWaitingList +
+            "/values/A"+str(rowIndex+2)+":S"+str(rowIndex+2)+"?key=" + APIKey)
+        dataList = (response.json()["values"])[0]
+        cost = 0
+        userData["groupType"] = dataList[11]
+
     userData["timestamp"] = dataList[0]
     userData["email"] = dataList[1]
     userData["phoneNumber"] = dataList[2]
@@ -88,28 +121,43 @@ def get_user_data(data, sheetIndex, rowIndex):
     userData["tour"] = dataList[8]
     userData["age"] = dataList[9]
     userData["stillStudent"] = dataList[10]
-    userData["else"] = dataList[11]
+    if (sheetIndex < 3):
+        userData["else"] = dataList[11]
+    else:
+        userData["else"] = dataList[12]
     userData["cost"] = cost
     return userData
 
+def check_if_waitingList_empty(filename):
+     with open(filename, "r") as f:
+        fileData = json.load(f)
+        if (len(fileData["addresses"]) > 0):
+            return False
+        else:
+            return True
 
-def compare_registered_and_mailed_users(data, listOfRegisteredUsers):
+
+
+
+def compare_registered_and_mailed_users(data, listOfRegisteredUsers, waitingListActive=False):
     icuMemberFile = data["mail"]["listOfIcuMemberMails"]
     studentFile = data["mail"]["listOfStudentMails"]
     nonStudentFile = data["mail"]["listOfNonStudentMails"]
+    waitingListFile = data["mail"]["listOfWaitingListMails"]
 
     listOfUserDataToBeSent = []
 
-    for i, filename in enumerate([icuMemberFile, studentFile, nonStudentFile]):
+    for i, filename in enumerate([icuMemberFile, studentFile, nonStudentFile, waitingListFile]):
         with open(filename, "r") as f:
             fileData = json.load(f)
             unwrittenAddresses = []
             for row, address in enumerate(listOfRegisteredUsers[i]):
                 if address != [] and address[0] not in fileData["addresses"]:
-                    unwrittenAddresses.append(address[0])
-                    userDataToBeSent = get_user_data(data, i, row)
-                    print(userDataToBeSent)
-                    listOfUserDataToBeSent.append(userDataToBeSent)
+                    if ((i < 3 and check_if_waitingList_empty(waitingListFile) and not waitingListActive) or (waitingListActive and i == 3)):
+                        unwrittenAddresses.append(address[0])
+                        userDataToBeSent = get_user_data(data, i, row)
+                        print(userDataToBeSent)
+                        listOfUserDataToBeSent.append(userDataToBeSent)
             for unwrittenAddress in unwrittenAddresses:
                 fileData["addresses"].append(unwrittenAddress)
             f.seek(0)
@@ -117,7 +165,7 @@ def compare_registered_and_mailed_users(data, listOfRegisteredUsers):
                 json.dump(fileData, outfile)
     return listOfUserDataToBeSent
 
-def send_mail(userData, data):
+def send_mail(userData, data, waitingListActive=False):
     smtp_server = data["mail"]["smtpServer"]
     port = data["mail"]["port"]
     sender_email = formataddr((data["mail"]["senderName"], data["mail"]["senderMail"]))
@@ -128,6 +176,11 @@ def send_mail(userData, data):
     message["Subject"] = data["mail"]["subject"]
     message["From"] = sender_email
     message["To"] = receiver_email
+
+    if (len(userData) == 13):
+        waitingListActive = False
+    if (len(userData) == 14):
+        waitingListActive = True
 
     timestamp = userData["timestamp"]
     email = userData["email"]
@@ -143,87 +196,150 @@ def send_mail(userData, data):
     anythingElse = userData["else"]
     cost = userData["cost"]
 
+    groupType = ""
+    if (waitingListActive):
+        groupType = userData["groupType"]
 
-    html = """\
-    <html>
-    <head>
-        <style>
-        table, th, td {
-          border: 1px solid black;
-          border-collapse: collapse;
-        }
-        th, td {
-          padding: 5px;
-          text-align: left;
-        }
-        </style>
-      <body>
-        <p>Hi """ + str(fullName) + """<br>
-           Thanks for registering for the winter week 2023! <br>
-        </p>
-        <table>
-  <caption style="text-align: left"><b>Your registration</b></caption>
-  <tr>
-    <th>Phone number</th>
-    <th>Name</th>
-    <th>Traveling with the Group</th>
-    <th>Vegetarian Dinner</th>
-    <th>Ski Pass</th>
-    <th>Ski Lessons</th>
-    <th>Freeriding</th>
-    <th>Price</th>    
-  </tr>
-  <tr>
-    <td>""" + str(phoneNumber) + """</td>
-    <td>""" + str(fullName) + """</td>
-    <td>""" + str(group) + """</td>
-    <td>""" + str(food) + """</td>
-    <td>""" + str(skiPass) + """</td>
-    <td>""" + str(lessons) + """</td>
-    <td>""" + str(tour) + """</td>
-    <td>""" + str(cost) + """ CHF</td>
-  </tr>
-</table>
-<br><br>
-<p>
-Please transfer the registration fee (""" +  str(cost) + """ CHF) within the next 2 weeks. The payment details are listed below<br>
-If you are an ICU Member, note that the registration is only finalized after the payment of the ICU-Membership fee.<br>
-If any of your information is wrong or if you have any additional questions, feel free to contact us. <br>
-<b>E-mail: </b>""" + data["mail"]["contactMail"] + """<br>
-<b>WhatsApp: </b>""" + data["mail"]["contactNumber"] + """<br>
-</p>
+    if (not waitingListActive):
+        html = """\
+        <html>
+        <head>
+            <style>
+            table, th, td {
+              border: 1px solid black;
+              border-collapse: collapse;
+            }
+            th, td {
+              padding: 5px;
+              text-align: left;
+            }
+            </style>
+          <body>
+            <p>Hi """ + str(fullName) + """<br>
+               Thanks for registering for the winter week 2023! <br>
+            </p>
+            <table>
+      <caption style="text-align: left"><b>Your registration</b></caption>
+      <tr>
+        <th>Phone number</th>
+        <th>Name</th>
+        <th>Traveling with the Group</th>
+        <th>Vegetarian Dinner</th>
+        <th>Ski Pass</th>
+        <th>Ski Lessons</th>
+        <th>Freeriding</th>
+        <th>Price</th>    
+      </tr>
+      <tr>
+        <td>""" + str(phoneNumber) + """</td>
+        <td>""" + str(fullName) + """</td>
+        <td>""" + str(group) + """</td>
+        <td>""" + str(food) + """</td>
+        <td>""" + str(skiPass) + """</td>
+        <td>""" + str(lessons) + """</td>
+        <td>""" + str(tour) + """</td>
+        <td>""" + str(cost) + """ CHF</td>
+      </tr>
+    </table>
+    <br><br>
+    <p>
+    Please transfer the registration fee (""" +  str(cost) + """ CHF) within the next 2 weeks. The payment details are listed below<br>
+    If you are an ICU Member, note that the registration is only finalized after the payment of the ICU-Membership fee.<br>
+    If any of your information is wrong or if you have any additional questions, feel free to contact us. <br>
+    <b>E-mail: </b>""" + data["mail"]["contactMail"] + """<br>
+    <b>WhatsApp: </b>""" + data["mail"]["contactNumber"] + """<br>
+    </p>
+    
+    <p>
+    Traveling with the group:<br>
+    Departure: """ + data["mail"]["departure"] + """ <br>
+    Arrival: """ + data["mail"]["arrival"] + """  <br><br>
+    If you can’t make the dates, contact us as early as possible.<br><br>
+    </p>
+    
+    <p>
+    Stay tuned for further Information<br>
+    Greetings<br>
+    Your Winter Week team =)<br>
+    </p>
+    
+    <p>
+    ------- Payment Details -------<br>
+    Kontonamen: Fachverein Informatik ICU (FV INF ICU)<br>
+    Zahlungszweck: Winter Week 2023, """ + email + """<br>
+    Kontonummer: 80-25124-4<br>
+    BC-Nummer: 9000<br>
+    BIC: POFICHBEXXX<br>
+    Prüfziffer: 36<br>
+    IBAN: CH36 0900 0000 8002 5124 4<br>
+    ---------------------------------------<br>
+    </p>
+    
+          </body>
+        </html>
+        """
 
-<p>
-Traveling with the group:<br>
-Departure: """ + data["mail"]["departure"] + """ <br>
-Arrival: """ + data["mail"]["arrival"] + """  <br><br>
-If you can’t make the dates, contact us as early as possible.<br><br>
+    if (waitingListActive):
+        html = """\
+        <html>
+        <head>
+            <style>
+            table, th, td {
+              border: 1px solid black;
+              border-collapse: collapse;
+            }
+            th, td {
+              padding: 5px;
+              text-align: left;
+            }
+            </style>
+          <body>
+            <p>Hi """ + str(fullName) + """<br>
+               Thanks for registering for the waiting list of winter week 2023! <br>
+            </p>
+            <p>
+               Your registered as a """ + str(groupType) + """!<br>
+            </p>
+            <table>
+      <caption style="text-align: left"><b>Your registration</b></caption>
+      <tr>
+        <th>Phone number</th>
+        <th>Name</th>
+        <th>Traveling with the Group</th>
+        <th>Vegetarian Dinner</th>
+        <th>Ski Pass</th>
+        <th>Ski Lessons</th>
+        <th>Freeriding</th>
+        <th>Price</th>    
+      </tr>
+      <tr>
+        <td>""" + str(phoneNumber) + """</td>
+        <td>""" + str(fullName) + """</td>
+        <td>""" + str(group) + """</td>
+        <td>""" + str(food) + """</td>
+        <td>""" + str(skiPass) + """</td>
+        <td>""" + str(lessons) + """</td>
+        <td>""" + str(tour) + """</td>
+        <td>""" + str(cost) + """ CHF</td>
+      </tr>
+    </table>
+    <br><br>
+    <p>
+    We'll manage your position on the waiting list and let you know when you are added to the official registration!<br>
+    If any of your information is wrong or if you have any additional questions, feel free to contact us. <br>
+    <b>E-mail: </b>""" + data["mail"]["contactMail"] + """<br>
+    <b>WhatsApp: </b>""" + data["mail"]["contactNumber"] + """<br>
+    </p>
+    
+    <p>
+    Stay tuned for further Information<br>
+    Greetings<br>
+    Your Winter Week team =)<br>
+    </p>
+          </body>
+        </html>
+        """
 
-Freeriding:<br>
-If you are interested in doing a guided ski/ freeride tour. You can get some more information and register yourself here: TODO<br>
-</p>
-
-<p>
-Stay tuned for further Information<br>
-Greetings<br>
-Your Winter Week team =)<br>
-</p>
-
-<p>
-------- Payment Details -------<br>
-Kontonamen: Fachverein Informatik ICU (FV INF ICU)<br>
-Zahlungszweck: Winter Week 2023, """ + email + """<br>
-Kontonummer: 80-25124-4<br>
-BC-Nummer: 9000<br>
-BIC: POFICHBEXXX<br>
-Prüfziffer: 36<br>
-IBAN: CH36 0900 0000 8002 5124 4<br>
----------------------------------------<br>
-</p>
-
-      </body>
-    </html>
-    """
     part1 = MIMEText(html, "html")
 
     # Add HTML/plain-text parts to MIMEMultipart message
@@ -231,7 +347,7 @@ IBAN: CH36 0900 0000 8002 5124 4<br>
     message.attach(part1)
 
 
-    # Create a secure SSL context
+# Create a secure SSL context
     context = ssl.create_default_context()
 
     # Try to log in to server and send email
@@ -249,8 +365,11 @@ IBAN: CH36 0900 0000 8002 5124 4<br>
         server.quit()
 
 data = get_config()
-[icu, students, nonStudents] = get_lists_of_registered_users(data)
-userDataObjects = compare_registered_and_mailed_users(data, [icu, students, nonStudents])
+[icu, students, nonStudents, waitingList], placesLeft = get_lists_of_registered_users(data)
+waitingListActive = False
+if (placesLeft <= 0):
+    waitingListActive = True
+userDataObjects = compare_registered_and_mailed_users(data, [icu, students, nonStudents, waitingList], waitingListActive)
 for userDataObject in userDataObjects:
     send_mail(userDataObject, data)
 

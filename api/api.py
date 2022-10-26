@@ -6,7 +6,7 @@ import json
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 def get_config():
-    with open('config.json', 'r') as f:
+    with open('config.json', 'r', encoding='unicode_escape') as f:
         data = json.load(f)
         return data
 

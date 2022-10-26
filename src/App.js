@@ -11,6 +11,7 @@ function App() {
   const [icuPrice, setIcuPrice] = useState("--");
   const [studentPrice, setStudentPrice] = useState("--");
   const [nonStudentPrice, setNonStudentPrice] = useState("--");
+  const [buttonName, setButtonName] = useState("Loading...");
   const ref = useRef(null);
 
   useEffect(() => {
@@ -19,6 +20,13 @@ function App() {
         setIcuPrice(data.icuMember);
         setStudentPrice(data.student);
         setNonStudentPrice(data.nonStudent);
+        if(parseInt(data.message) > 0){
+            setButtonName("Register")
+        }
+        else {
+            setButtonName("Register for waiting list")
+        }
+
     });
   }, []);
 
@@ -26,6 +34,32 @@ function App() {
     const goToRegisterButtons = () => {
         ref.current?.scrollIntoView({behavior: 'smooth'});
     };
+
+    const memberRegisterLink = "https://docs.google.com/forms/d/e/1FAIpQLSdQ2OYju5qvYjHIBVI4-yZu8MlDJc3OZnDDi15wgz___UudzQ/viewform?usp=sf_link"
+    const studentRegisterLink = "https://docs.google.com/forms/d/e/1FAIpQLScil9xHA31qb3SOXWqTc6WHHBiV_B4uNDpGcPx4dRfV5Zwdyg/viewform?usp=sf_link"
+    const nonStudentRegisterLink = "https://docs.google.com/forms/d/e/1FAIpQLSfi_Yy1yQ6JjIs_G5WZAo_388TFiIBxagbGSqs1fRzaCmVfpA/viewform?usp=sf_link"
+
+    const waitingListLink = "https://docs.google.com/forms/d/e/1FAIpQLScGIlQxcSi1zjhqo9vAsz1uRQYfc9eh0zrJioy5pzE4DsPmsA/viewform?usp=sf_link"
+
+    function getRegisterLink(index){
+        if (message === "--"){
+            return ""
+        }
+        else if(parseInt(message) > 0){
+            if(index === 0){
+                return memberRegisterLink
+            }
+            if(index === 1){
+                return studentRegisterLink
+            }
+            if(index === 2){
+                return nonStudentRegisterLink
+            }
+        }
+        else {
+            return waitingListLink
+        }
+    }
 
   return (
       <div className="App">
@@ -43,7 +77,7 @@ function App() {
 
           <div className="container" style={{minHeight: '30px'}}/>
 
-          <div className="button6" onClick={() => { goToRegisterButtons(); }} style={{cursor: 'pointer'}}> Register
+          <div className="button6" onClick={() => { goToRegisterButtons(); }} style={{cursor: 'pointer'}}> {buttonName}
           </div>
 
           <div>
@@ -95,7 +129,7 @@ function App() {
                       </div>
                       <div className="" style={{fontSize: '18px'}}>________________________________</div>
                       <div>
-                          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdQ2OYju5qvYjHIBVI4-yZu8MlDJc3OZnDDi15wgz___UudzQ/viewform?usp=sf_link"><div className="button6" style={{margin: '20px'}}> Register </div></a>
+                          <a href={getRegisterLink(0)}><div className="button6" style={{margin: '20px'}}> {buttonName} </div></a>
                       </div>
                   </div>
 
@@ -110,7 +144,7 @@ function App() {
                       </div>
                       <div className="" style={{fontSize: '18px'}}>________________________________</div>
                       <div>
-                          <a href="https://docs.google.com/forms/d/e/1FAIpQLScil9xHA31qb3SOXWqTc6WHHBiV_B4uNDpGcPx4dRfV5Zwdyg/viewform?usp=sf_link"><div className="button6" style={{margin: '20px'}}> Register </div></a>
+                          <a href={getRegisterLink(1)}><div className="button6" style={{margin: '20px'}}> {buttonName} </div></a>
                       </div>
                   </div>
 
@@ -125,7 +159,7 @@ function App() {
                       </div>
                       <div className="" style={{fontSize: '18px'}}>________________________________</div>
                       <div>
-                          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfi_Yy1yQ6JjIs_G5WZAo_388TFiIBxagbGSqs1fRzaCmVfpA/viewform?usp=sf_link"><div className="button6" style={{margin: '20px'}}> Register </div></a>
+                          <a href={getRegisterLink(2)}><div className="button6" style={{margin: '20px'}}> {buttonName} </div></a>
                       </div>
                   </div>
 
