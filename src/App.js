@@ -3,6 +3,7 @@ import forest from './images/forest.jpg';
 import spinatscha from './images/spinatscha.jpg';
 import sedrun from './images/sedrun.jpg';
 import icu from './images/icu.png';
+import faps from './images/faps.png';
 import {useRef} from 'react';
 import './App.css';
 
@@ -226,12 +227,17 @@ function App() {
           <div style={{minHeight: '50px'}}/>
 
           <div className="footer">
-              <div style={{minHeight: '50px'}}/>
-              <a style={{textDecoration: 'none'}}href="https://icuzh.ch/"> <div style={{maxWidth: '500px', padding: '0 20px'}}>
+              <a style={{textDecoration: 'none'}}href="https://icuzh.ch/"> <div style={{maxWidth: '500px', padding: '20px 20px'}}>
                       <div className='image' style={{ backgroundImage: `url(${icu})`, height: '60px', backgroundSize: '300px', backgroundPosition: 'left'}}/>
                       <p className="custom-font" style={{fontSize: '15px', color: '#192c37', textAlign: 'left'}}>© 2022 Fachverein Informatik, All right reserved.</p>
                   </div></a>
+              <a style={{textDecoration: 'none'}}href="https://www.faps.ch/"> <div style={{maxWidth: '500px', padding: '20px 20px'}}>
+                  <div className='image' style={{ backgroundImage: `url(${faps})`, height: '60px', backgroundSize: '60px', backgroundPosition: 'left'}}/>
+                  <p className="custom-font" style={{fontSize: '15px', color: '#192c37', textAlign: 'left'}}>Fachverein Psychologie</p>
+              </div></a>
+
           </div>
+
       </div>
   );
 }
