@@ -19,32 +19,34 @@ def get_message():
 
     data = get_config()
 
-    documentIDMembers = data["googleApi"]["icuMemberDocumentID"]
-    documentIDStudents = data["googleApi"]["studentDocumentID"]
-    documentIDNonStudents = data["googleApi"]["nonStudentDocumentID"]
+    icuMemberFile = data["mail"]["listOfIcuMemberMails"]
+    fapsMemberFile = data["mail"]["listOfFapsMemberMails"]
+    studentFile = data["mail"]["listOfStudentMails"]
+    nonStudentFile = data["mail"]["listOfNonStudentMails"]
 
-    APIKey = data["googleApi"]["apiKey"]
+    for i, filename in enumerate([icuMemberFile, studentFile, nonStudentFile, fapsMemberFile]):
+        with open(filename, "r") as f:
+            fileData = json.load(f)
+            length = len(fileData["addresses"])
+            if (i == 0):
+                lenIcu = length
+            if (i == 1):
+                lenStudents = length
+            if (i == 2):
+                lenNonStudents = length
+            if (i == 3):
+                lenFaps = length
+
     totalPlaces = data["registration"]["totalNumberOfFreePlaces"]
 
-    #get icu members list
-    response = requests.get("https://sheets.googleapis.com/v4/spreadsheets/"+ documentIDMembers + "/values/B1:B?key=" + APIKey)
-    icu = len(list(filter(None, response.json()["values"]))) - 1
-
-    #get students list
-    response = requests.get("https://sheets.googleapis.com/v4/spreadsheets/"+ documentIDStudents + "/values/B1:B?key=" + APIKey)
-    students = len(list(filter(None, response.json()["values"]))) - 1
-
-    #get non students list
-    response = requests.get("https://sheets.googleapis.com/v4/spreadsheets/"+ documentIDNonStudents + "/values/B1:B?key=" + APIKey)
-    nonStudents = len(list(filter(None, response.json()["values"]))) - 1
-
-    placesLeft = totalPlaces - nonStudents - icu - students
+    placesLeft = totalPlaces - lenIcu - lenStudents - lenNonStudents - lenFaps 
 
     icu = data["pricing"]["icuMember"]
+    fapsMember = data["pricing"]["fapsMember"]
     student = data["pricing"]["student"]
     nonStudent = data["pricing"]["nonStudent"]
     skiPrice = data["pricing"]["skiPrice"]
 
-    return {'message': placesLeft, 'icuMember': icu, 'student': student, 'nonStudent': nonStudent, 'skiPrice': skiPrice}
+    return {'message': placesLeft, 'icuMember': icu, 'student': student, 'nonStudent': nonStudent, 'skiPrice': skiPrice, 'fapsMember': fapsMember}
 
 

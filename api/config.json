@@ -1,17 +1,19 @@
 {
   "registration": {
-    "totalNumberOfFreePlaces": 5
+    "totalNumberOfFreePlaces": 0
   },
 
   "pricing": {
     "icuMember": 500,
+    "fapsMember": 550,
     "student": 650,
-    "nonStudent": 750,
-    "skiPrice": 190
+    "nonStudent": 800,
+    "skiPrice": 220
   },
 
   "googleApi": {
     "icuMemberDocumentID": "1Iq5uOSfdK6H2x6PCnvfLi9rNkBfzmbQotGFPN9KG7JE",
+    "fapsMemberDocumentID": "1xy_bTgzRAFJQb_1coOANdijYICPzHgc5ciJZ1Y1VxFU",
     "studentDocumentID": "1qnbm8QdaaZ52hRLmHPOVet_NRBxKRDG7AhNAb1BtSA0",
     "nonStudentDocumentID": "1exnDn0rhZw6kQCeQOADmOzvRggZI2C3NN-TpLk-fH2k",
     "waitingListID": "1JD4LSAu9zXeecmvWs0c_HWlcXmptwnkFOxiAcYFvv0I",
@@ -24,12 +26,13 @@
     "senderMail": "winterweek23@outlook.com",
     "contactMail": "board@icuzh.ch",
     "contactNumber": "https://wa.me/41764173298",
-    "departure": "29.1.2023, 08:00, Z�rich HB",
-    "arrival": "4.2.2023, 18:00, Z�rich HB",
+    "departure": "29.1.2023, 08:00, Zürich HB",
+    "arrival": "4.2.2023, 18:00, Zürich HB",
     "senderPassword": "pw.txt",
     "smtpServer": "smtp-mail.outlook.com",
     "port": 587,
     "listOfIcuMemberMails": "lists/registeredIcuMembers.json",
+    "listOfFapsMemberMails": "lists/registeredFapsMembers.json",
     "listOfStudentMails": "lists/registeredStudentMembers.json",
     "listOfNonStudentMails": "lists/registeredNonStudentMails.json",
     "listOfWaitingListMails": "lists/waitingListMails.json"

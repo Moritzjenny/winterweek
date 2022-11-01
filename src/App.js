@@ -4,12 +4,14 @@ import spinatscha from './images/spinatscha.jpg';
 import sedrun from './images/sedrun.jpg';
 import icu from './images/icu.png';
 import faps from './images/faps.png';
+import fvcom from './images/fvcom.png';
 import {useRef} from 'react';
 import './App.css';
 
 function App() {
   const [message, setMessage] = useState("--");
   const [icuPrice, setIcuPrice] = useState("--");
+  const [fapsPrice, setFapsPrice] = useState("--");
   const [studentPrice, setStudentPrice] = useState("--");
   const [nonStudentPrice, setNonStudentPrice] = useState("--");
   const [skiPrice, setSkiPrice] = useState("--");
@@ -23,6 +25,7 @@ function App() {
         setStudentPrice(data.student);
         setNonStudentPrice(data.nonStudent);
         setSkiPrice(data.skiPrice);
+        setFapsPrice(data.fapsMember);
         if(parseInt(data.message) > 0){
             setButtonName("Register")
         }
@@ -39,6 +42,7 @@ function App() {
     };
 
     const memberRegisterLink = "https://docs.google.com/forms/d/e/1FAIpQLSdQ2OYju5qvYjHIBVI4-yZu8MlDJc3OZnDDi15wgz___UudzQ/viewform?usp=sf_link"
+    const fapsRegisterLink = "https://docs.google.com/forms/d/e/1FAIpQLSf_e6G0fLVFXtWC1IP8dXRXHg8pD98CrDxWmgGoMW5g0rgEhg/viewform?usp=sf_link"
     const studentRegisterLink = "https://docs.google.com/forms/d/e/1FAIpQLScil9xHA31qb3SOXWqTc6WHHBiV_B4uNDpGcPx4dRfV5Zwdyg/viewform?usp=sf_link"
     const nonStudentRegisterLink = "https://docs.google.com/forms/d/e/1FAIpQLSfi_Yy1yQ6JjIs_G5WZAo_388TFiIBxagbGSqs1fRzaCmVfpA/viewform?usp=sf_link"
 
@@ -57,6 +61,9 @@ function App() {
             }
             if(index === 2){
                 return nonStudentRegisterLink
+            }
+            if(index === 3){
+                return fapsRegisterLink
             }
         }
         else {
@@ -128,13 +135,29 @@ function App() {
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
                       </div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '150px'}}> First things first, you're awesome! We want to give back to our members, that's why you exclusively profit of our best price. If you are still studying and you are an ICU-member you get to experience the magical Winter Week for just {icuPrice}.-. Note that you need to be an ICU-Member since 01.10.2022</div>
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}> First things first, you're awesome! We want to give back to our members, that's why you exclusively profit of our best price. If you are still a student and have been an ICU member since 1.11.2022 you get to experience the magical Winter Week for just {icuPrice}.-.</div>
                       </div>
-                      <div className="" style={{fontSize: '18px'}}>________________________________</div>
+                      <div className="" style={{fontSize: '18px'}}>__________________________</div>
                       <div>
                           <a href={getRegisterLink(0)}><div className="button6" style={{margin: '20px'}}> {buttonName} </div></a>
                       </div>
                   </div>
+
+                  <div className="rcorners" ref={ref} >
+                      <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>FAPS & FVCOM Mem.</div>
+                      <div className="tile-keyword-row-large">
+                          <div className="custom-font text" style={{fontSize: '55px'}}> <span className="custom-font-bold">{fapsPrice}</span></div>
+                          <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
+                      </div>
+                      <div className="tile-keyword-row-large">
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}> Hi neighbors! We're excited to share events and our collaborative projects allow us to give FAPS & FVCOM members a special discount! If you are still a student and have been a member since 1.11.2022 you get to experience the magical Winter Week for just {fapsPrice}.-.</div>
+                      </div>
+                      <div className="" style={{fontSize: '18px'}}>__________________________</div>
+                      <div>
+                          <a href={getRegisterLink(3)}><div className="button6" style={{margin: '20px'}}> {buttonName} </div></a>
+                      </div>
+                  </div>
+
 
                   <div className="rcorners" >
                       <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>VSUZH Members</div>
@@ -143,9 +166,9 @@ function App() {
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
                       </div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '150px'}}>Hey fellow students, we know you're on a budget. That's why we made the best deals with our partners. For {studentPrice}.- you can experience the ski holidays of a lifetime.</div>
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}>Hey fellow students, we know you're on a budget. That's why we made the best deals with our partners. For {studentPrice}.- you can experience the ski holidays of a lifetime.</div>
                       </div>
-                      <div className="" style={{fontSize: '18px'}}>________________________________</div>
+                      <div className="" style={{fontSize: '18px'}}>__________________________</div>
                       <div>
                           <a href={getRegisterLink(1)}><div className="button6" style={{margin: '20px'}}> {buttonName} </div></a>
                       </div>
@@ -158,9 +181,9 @@ function App() {
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
                       </div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '150px'}}>Already working hard in the corporate world, but missing your friends at ICU? Exprience the sudent life again for one exciting week for {nonStudentPrice}.-</div>
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}>Already working hard in the corporate world, but missing your friends at ICU? Exprience the sudent life again for one exciting week for {nonStudentPrice}.-</div>
                       </div>
-                      <div className="" style={{fontSize: '18px'}}>________________________________</div>
+                      <div className="" style={{fontSize: '18px'}}>__________________________</div>
                       <div>
                           <a href={getRegisterLink(2)}><div className="button6" style={{margin: '20px'}}> {buttonName} </div></a>
                       </div>
@@ -234,6 +257,10 @@ function App() {
               <a style={{textDecoration: 'none'}}href="https://www.faps.ch/"> <div style={{maxWidth: '500px', padding: '20px 20px'}}>
                   <div className='image' style={{ backgroundImage: `url(${faps})`, height: '60px', backgroundSize: '60px', backgroundPosition: 'left'}}/>
                   <p className="custom-font" style={{fontSize: '15px', color: '#192c37', textAlign: 'left'}}>Fachverein Psychologie</p>
+              </div></a>
+              <a style={{textDecoration: 'none'}}href="https://fachverein.com/"> <div style={{maxWidth: '500px', padding: '20px 20px'}}>
+                  <div className='image' style={{ backgroundImage: `url(${fvcom})`, height: '60px', backgroundSize: '60px', backgroundPosition: 'left'}}/>
+                  <p className="custom-font" style={{fontSize: '15px', color: '#192c37', textAlign: 'left'}}>Fachverein Communication</p>
               </div></a>
 
           </div>

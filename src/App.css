@@ -59,7 +59,7 @@
 
 .grid-container-options {
     display: grid;
-    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-template-columns: 25% 25% 25% 25%;
 }
 
 .grid-wrapper {
@@ -93,9 +93,9 @@
 
 .tile-keyword-row-large {
     display: flex;
-    align-items: center;
     justify-content: center;
     padding: 20px 0;
+    text-align: start;
 }
 
 
@@ -125,7 +125,7 @@
     display: flex;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1050px) {
     .grid-wrapper {
         max-width: 1200px;
         margin: auto;

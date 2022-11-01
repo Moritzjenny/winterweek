@@ -18,15 +18,17 @@ def get_pw(file):
 
 def get_lists_of_registered_users(data):
     documentIDMembers = data["googleApi"]["icuMemberDocumentID"]
+    documentIDFapsMembers = data["googleApi"]["fapsMemberDocumentID"]
     documentIDStudents = data["googleApi"]["studentDocumentID"]
     documentIDNonStudents = data["googleApi"]["nonStudentDocumentID"]
     documentIDWaitingList = data["googleApi"]["waitingListID"]
 
     icuMemberFile = data["mail"]["listOfIcuMemberMails"]
+    fapsMemberFile = data["mail"]["listOfFapsMemberMails"]
     studentFile = data["mail"]["listOfStudentMails"]
     nonStudentFile = data["mail"]["listOfNonStudentMails"]
 
-    for i, filename in enumerate([icuMemberFile, studentFile, nonStudentFile]):
+    for i, filename in enumerate([icuMemberFile, studentFile, nonStudentFile, fapsMemberFile]):
         with open(filename, "r") as f:
             fileData = json.load(f)
             length = len(fileData["addresses"])
@@ -36,6 +38,8 @@ def get_lists_of_registered_users(data):
                 lenStudents = length
             if (i == 2):
                 lenNonStudents = length
+            if (i == 3):
+                lenFaps = length
 
     APIKey = data["googleApi"]["apiKey"]
 
@@ -54,15 +58,20 @@ def get_lists_of_registered_users(data):
         "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDNonStudents + "/values/B1:B?key=" + APIKey)
     nonStudents = (response.json()["values"])[1:]
 
+    # get faps list
+    response = requests.get(
+        "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDFapsMembers + "/values/B1:B?key=" + APIKey)
+    faps = (response.json()["values"])[1:]
+
     # get waiting list
     response = requests.get(
         "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDWaitingList + "/values/B1:B?key=" + APIKey)
     waitingList = (response.json()["values"])[1:]
 
     totalPlaces = data["registration"]["totalNumberOfFreePlaces"]
-    placesLeft = totalPlaces - lenIcu - lenStudents - lenNonStudents
+    placesLeft = totalPlaces - lenIcu - lenStudents - lenNonStudents - lenFaps 
 
-    return [icu, students, nonStudents, waitingList], placesLeft
+    return [icu, students, nonStudents, faps, waitingList], placesLeft
 
 def get_user_data(data, sheetIndex, rowIndex):
     APIKey = data["googleApi"]["apiKey"]
@@ -99,6 +108,16 @@ def get_user_data(data, sheetIndex, rowIndex):
         cost = data["pricing"]["nonStudent"]
 
     elif sheetIndex == 3:
+        documentIDFaps = data["googleApi"]["fapsMemberDocumentID"]
+
+        # get faps list
+        response = requests.get(
+            "https://sheets.googleapis.com/v4/spreadsheets/" + documentIDFaps +
+            "/values/A"+str(rowIndex+2)+":S"+str(rowIndex+2)+"?key=" + APIKey)
+        dataList = (response.json()["values"])[0]
+        cost = data["pricing"]["fapsMember"]
+
+    elif sheetIndex == 3:
         documentIDWaitingList = data["googleApi"]["waitingListID"]
 
         # get waiting list
@@ -120,7 +139,7 @@ def get_user_data(data, sheetIndex, rowIndex):
     userData["tour"] = dataList[8]
     userData["age"] = dataList[9]
     userData["stillStudent"] = dataList[10]
-    if (sheetIndex < 3):
+    if (sheetIndex < 4):
         userData["else"] = dataList[11]
     else:
         userData["else"] = dataList[12]
@@ -143,19 +162,20 @@ def check_if_waitingList_empty(filename):
 
 def compare_registered_and_mailed_users(data, listOfRegisteredUsers, waitingListActive=False):
     icuMemberFile = data["mail"]["listOfIcuMemberMails"]
+    fapsMemberFile = data["mail"]["listOfFapsMemberMails"]
     studentFile = data["mail"]["listOfStudentMails"]
     nonStudentFile = data["mail"]["listOfNonStudentMails"]
     waitingListFile = data["mail"]["listOfWaitingListMails"]
 
     listOfUserDataToBeSent = []
 
-    for i, filename in enumerate([icuMemberFile, studentFile, nonStudentFile, waitingListFile]):
+    for i, filename in enumerate([icuMemberFile, studentFile, nonStudentFile, fapsMemberFile, waitingListFile]):
         with open(filename, "r") as f:
             fileData = json.load(f)
             unwrittenAddresses = []
             for row, address in enumerate(listOfRegisteredUsers[i]):
                 if address != [] and address[0] not in fileData["addresses"]:
-                    if ((i < 3 and check_if_waitingList_empty(waitingListFile) and not waitingListActive) or (waitingListActive and i == 3)):
+                    if ((i < 4 and check_if_waitingList_empty(waitingListFile) and not waitingListActive) or (waitingListActive and i == 4)):
                         unwrittenAddresses.append(address[0])
                         userDataToBeSent = get_user_data(data, i, row)
                         print(userDataToBeSent)
@@ -366,11 +386,11 @@ def send_mail(userData, data, waitingListActive=False):
         server.quit()
 
 data = get_config()
-[icu, students, nonStudents, waitingList], placesLeft = get_lists_of_registered_users(data)
+[icu, students, nonStudents, faps, waitingList], placesLeft = get_lists_of_registered_users(data)
 waitingListActive = False
 if (placesLeft <= 0):
     waitingListActive = True
-userDataObjects = compare_registered_and_mailed_users(data, [icu, students, nonStudents, waitingList], waitingListActive)
+userDataObjects = compare_registered_and_mailed_users(data, [icu, students, nonStudents, faps, waitingList], waitingListActive)
 for userDataObject in userDataObjects:
     send_mail(userDataObject, data)
 
