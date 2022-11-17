@@ -91,7 +91,7 @@ function App() {
           </div>
 
           <div>
-              <p className="custom-font" style={{fontSize: '20px', color: 'grey'}}>{message} Places left</p>
+              <p className="custom-font" style={{fontSize: '20px', color: 'grey'}}>{message} places left</p>
           </div>
 
           <div className="container" style={{minHeight: '80px'}}/>
@@ -135,7 +135,7 @@ function App() {
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
                       </div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}> First things first, you're awesome! We want to give back to our members, that's why you exclusively profit of our best price. If you are still a student and have been an ICU member since 1.11.2022 you get to experience the magical Winter Week for just {icuPrice}.-.</div>
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}> First things first, you're awesome! We want to give back to our members, that's why you exclusively profit of our best price. If you are still a student and have been an ICU member since 16.11.2022 you get to experience the magical Winter Week for just {icuPrice}.-.</div>
                       </div>
                       <div className="" style={{fontSize: '18px'}}>__________________________</div>
                       <div>
@@ -150,7 +150,7 @@ function App() {
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
                       </div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}> Hi neighbors! We're excited to share events and our collaborative projects allow us to give FAPS & FVCOM members a special discount! If you are still a student and have been a member since 1.11.2022 you get to experience the magical Winter Week for just {fapsPrice}.-.</div>
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}> Hi neighbors! We're excited to share events and our collaborative projects allow us to give FAPS & FVCOM members a special discount! If you are still a student and have been a member since 16.11.2022 you get to experience the magical Winter Week for just {fapsPrice}.-.</div>
                       </div>
                       <div className="" style={{fontSize: '18px'}}>__________________________</div>
                       <div>
