@@ -3,7 +3,7 @@ import forest from './images/forest.jpg';
 import spinatscha from './images/spinatscha.jpg';
 import sedrun from './images/sedrun.jpg';
 import icu from './images/icu.png';
-import faps from './images/faps.png';
+import vsuzh from './images/Logo_VSUZH_positiv_2.png';
 import fvcom from './images/fvcom.png';
 import {useRef} from 'react';
 import './App.css';
@@ -135,7 +135,7 @@ function App() {
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
                       </div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}> First things first, you're awesome! We want to give back to our members, that's why you exclusively profit of our best price. If you are still a student and have been an ICU member since 20.11.2022 you get to experience the magical Winter Week for just {icuPrice}.-.</div>
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}> First things first, you're awesome! We want to give back to our members, that's why you exclusively profit of our best price. If you are still a student and have been an ICU member since 22.11.2022 you get to experience the magical Winter Week for just {icuPrice}.-.</div>
                       </div>
                       <div className="" style={{fontSize: '18px'}}>__________________________</div>
                       <div>
@@ -144,13 +144,13 @@ function App() {
                   </div>
 
                   <div className="rcorners" ref={ref} >
-                      <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>FAPS & FVCOM Mem.</div>
+                      <div className="tile-title custom-font" style={{fontSize: '25px', textAlign: 'left'}}>FVCOM Members</div>
                       <div className="tile-keyword-row-large">
                           <div className="custom-font text" style={{fontSize: '55px'}}> <span className="custom-font-bold">{fapsPrice}</span></div>
                           <div className="custom-font"  style={{fontSize: '25px', marginTop: '20px', marginLeft: '10px'}}>CHF</div>
                       </div>
                       <div className="tile-keyword-row-large">
-                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}> Hi neighbors! We're excited to share events and our collaborative projects allow us to give FAPS & FVCOM members a special discount! If you are still a student and have been a member since 20.11.2022 you get to experience the magical Winter Week for just {fapsPrice}.-.</div>
+                          <div className="custom-font" style={{fontSize: '18px', color: "#666666", padding: '0 20px', textAlign: 'left', minHeight: '250px'}}> Hi neighbors! We're excited to share events and our collaborative projects allow us to give FVCOM members a special discount! If you are still a student and have been a member since 22.11.2022 you get to experience the magical Winter Week for just {fapsPrice}.-.</div>
                       </div>
                       <div className="" style={{fontSize: '18px'}}>__________________________</div>
                       <div>
@@ -254,13 +254,13 @@ function App() {
                       <div className='image' style={{ backgroundImage: `url(${icu})`, height: '60px', backgroundSize: '300px', backgroundPosition: 'left'}}/>
                       <p className="custom-font" style={{fontSize: '15px', color: '#192c37', textAlign: 'left'}}>© 2022 Fachverein Informatik, All right reserved.</p>
                   </div></a>
-              <a style={{textDecoration: 'none'}}href="https://www.faps.ch/"> <div style={{maxWidth: '500px', padding: '20px 20px'}}>
-                  <div className='image' style={{ backgroundImage: `url(${faps})`, height: '60px', backgroundSize: '60px', backgroundPosition: 'left'}}/>
-                  <p className="custom-font" style={{fontSize: '15px', color: '#192c37', textAlign: 'left'}}>Fachverein Psychologie</p>
-              </div></a>
               <a style={{textDecoration: 'none'}}href="https://fachverein.com/"> <div style={{maxWidth: '500px', padding: '20px 20px'}}>
-                  <div className='image' style={{ backgroundImage: `url(${fvcom})`, height: '60px', backgroundSize: '60px', backgroundPosition: 'left'}}/>
+                  <div className='image' style={{ backgroundImage: `url(${fvcom})`, height: '60px', backgroundSize: '90px', backgroundPosition: 'left'}}/>
                   <p className="custom-font" style={{fontSize: '15px', color: '#192c37', textAlign: 'left'}}>Fachverein Communication</p>
+              </div></a>
+              <a style={{textDecoration: 'none'}}href="https://www.vsuzh.ch/"> <div style={{maxWidth: '500px', padding: '20px 20px'}}>
+                  <div className='image' style={{ backgroundImage: `url(${vsuzh})`, height: '60px', backgroundSize: '120px', backgroundPosition: 'left'}}/>
+                  <p className="custom-font" style={{fontSize: '15px', color: '#192c37', textAlign: 'left'}}>Verband der Studierenden der Universität Zürich</p>
               </div></a>
 
           </div>
